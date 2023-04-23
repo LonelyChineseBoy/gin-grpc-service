@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"gin-test/api"
 	"gin-test/global"
 	"gin-test/initialize"
@@ -9,6 +10,8 @@ import (
 func init() {
 	initialize.InitGinLogger()
 	initialize.InitGinRouter()
+	initialize.InitNacos()
+	fmt.Println(global.NacosConfig)
 	api.InitApi()
 }
 func main() {
