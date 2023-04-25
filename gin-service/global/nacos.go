@@ -1,18 +1,10 @@
 package global
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/nacos-group/nacos-sdk-go/v2/common/constant"
-	"go.uber.org/zap"
-	"gorm.io/gorm"
 )
 
-var (
-	Router      *gin.Engine
-	Logger      *zap.Logger
-	DB          *gorm.DB
-	NacosConfig NacosClientAndServerConfig
-)
+var NacosConfig NacosClientAndServerConfig
 
 type NacosClientConfig struct {
 	TimeoutMs            uint64                            `mapstructure:"TimeoutMs"`            // timeout for requesting Nacos server, default value is 10000ms
@@ -51,6 +43,6 @@ type NacosServerConfig struct {
 }
 
 type NacosClientAndServerConfig struct {
-	NacosClientConfig `mapstructure:"client-config"`
-	NacosServerConfig `mapstructure:"server-config"`
+	NacosClientConfig  `mapstructure:"client-config"`
+	NacosServerConfigs []NacosServerConfig `mapstructure:"server-config"`
 }

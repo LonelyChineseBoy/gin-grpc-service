@@ -13,7 +13,7 @@ func InitApi() {
 }
 
 func Hello(ctx *gin.Context) {
-	zap.L().Info("return Hello json", zap.String("funcName", "Hello"))
+	zap.S().Info("return Hello json", zap.String("funcName", "Hello"))
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "hello",
 	})

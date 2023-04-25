@@ -19,5 +19,5 @@ func InitGinLogger() {
 
 func InitGinRouter() {
 	global.Router = gin.New()
-	global.Router.Use(middleware.GinLogger(), middleware.GinRecovery(true))
+	global.Router.Use(middleware.GinLogger(), middleware.GinRecovery(true), middleware.SentinelWarmUp())
 }

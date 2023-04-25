@@ -23,8 +23,13 @@ client-config:
   AppendToStdoutL: false                    # bool                     // if append log to stdout
 
 server-config:
-  Scheme: ""                               #string   // the nacos server scheme,default=http,this is not required in 2.0
-  ContextPath: ""                          #string   // the nacos server contextpath,default=/nacos,this is not required in
-  IpAddr: "150.158.46.17"                               #string   // the nacos server address
-  Port: 8848                                  #uint64   // nacos server port
-  GrpcPort: 0                              #uint64   // nacos server grpc port, default=server port + 1000, this is not required
+   - Scheme: ""                               #string   // the nacos server scheme,default=http,this is not required in 2.0
+     ContextPath: ""                          #string   // the nacos server contextpath,default=/nacos,this is not required in
+     IpAddr: "150.158.46.17"                               #string   // the nacos server address
+     Port: 8848                                  #uint64   // nacos server port
+     GrpcPort: 0                              #uint64   // nacos server grpc port, default=server port + 1000, this is not required
+#   - Scheme: ""                               #string   // the nacos server scheme,default=http,this is not required in 2.0
+#     ContextPath: ""                          #string   // the nacos server contextpath,default=/nacos,this is not required in
+#     IpAddr: "150.158.46.17"                               #string   // the nacos server address
+#     Port: 88490                                  #uint64   // nacos server port
+#     GrpcPort: 0                              #uint64   // nacos server grpc port, default=server port + 1000, this is not required

@@ -7,8 +7,8 @@ import (
 	"go.uber.org/zap"
 )
 
-func InitNacos() {
-	viper.SetConfigFile("config/nacos-config.yaml")
+func InitNacosConfig() {
+	viper.SetConfigFile("config/nacos.yaml")
 	err := viper.ReadInConfig()
 	if err != nil {
 		zap.S().Errorf("viper read config file failed %s \n", err)
