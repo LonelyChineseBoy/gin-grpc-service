@@ -1,14 +1,12 @@
 package handler
 
 import (
-	"context"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
-	"net/http"
-	"os"
-	"os/signal"
-	"syscall"
+	"math/rand"
+	"net"
+	"strconv"
 	"time"
 )
 
@@ -30,27 +28,16 @@ func ReadConfigByYamlFile(filePath string, globalVal interface{}) {
 	})
 }
 
-func ExitProcedure(addr string, handler http.Handler) {
-	srv := &http.Server{
-		Addr:    addr,
-		Handler: handler,
-	}
-	zap.S().Infof("Will Listen Server At %v", addr)
-	go func() {
-		err := srv.ListenAndServe()
-		if err != nil && err != http.ErrServerClosed {
-			zap.S().Infof("Listen: %v", err)
-		}
-	}()
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
-	<-quit
-	zap.S().Info("Shutdown Server......")
-	timeout, cancelFunc := context.WithTimeout(context.Background(), time.Second*50)
-	defer cancelFunc()
-	err := srv.Shutdown(timeout)
+func GetAvailablePort() (int, error) {
+	rand.Seed(time.Now().UnixNano())
+	minPort := 1024
+	maxPort := 65535
+	port := rand.Intn(maxPort-minPort) + minPort
+	listener, err := net.Listen("tcp", ":"+strconv.Itoa(port))
 	if err != nil {
-		zap.S().Errorf("Server Shutdown:%v", err)
+		return 0, err
 	}
-	zap.S().Info("Server Exiting")
+	listener.Close()
+	actualPort := listener.Addr().(*net.TCPAddr).Port
+	return actualPort, nil
 }

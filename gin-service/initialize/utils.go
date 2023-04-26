@@ -12,7 +12,7 @@ import (
 	"os"
 )
 
-func InitGinLogger() {
+func InitLogger() {
 	encoder := logger.GetEncoder()
 	core := zapcore.NewCore(encoder, os.Stdout, zapcore.DebugLevel)
 	global.Logger = zap.New(core)
