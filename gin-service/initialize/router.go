@@ -4,6 +4,7 @@ import (
 	"gin-test/global"
 	"gin-test/logger"
 	"gin-test/middleware"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -19,5 +20,8 @@ func InitGinLogger() {
 
 func InitGinRouter() {
 	global.Router = gin.New()
-	global.Router.Use(middleware.GinLogger(), middleware.GinRecovery(true), middleware.SentinelWarmUp())
+	global.Router.Use(cors.Default())
+	global.Router.Use(middleware.GinLogger())
+	global.Router.Use(middleware.GinRecovery(true))
+	global.Router.Use(middleware.SentinelWarmUp())
 }
