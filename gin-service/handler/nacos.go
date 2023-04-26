@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"gin-test/global"
 	"github.com/nacos-group/nacos-sdk-go/v2/clients"
 	"github.com/nacos-group/nacos-sdk-go/v2/clients/config_client"
@@ -41,7 +40,6 @@ func NewNacosServerConfigs() []constant.ServerConfig {
 		}
 		nacosConfigs = append(nacosConfigs, serverConfig)
 	}
-	fmt.Printf("nacosConfigs is %v", nacosConfigs)
 	return nacosConfigs
 }
 

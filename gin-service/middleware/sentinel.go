@@ -14,8 +14,8 @@ func SentinelWarmUp() gin.HandlerFunc {
 		_, err := flow.LoadRules([]*flow.Rule{
 			{
 				Resource:               "test",
-				TokenCalculateStrategy: flow.WarmUp,
-				ControlBehavior:        flow.Reject,
+				TokenCalculateStrategy: 1,
+				ControlBehavior:        0,
 				Threshold:              10,
 				WarmUpPeriodSec:        10,
 				StatIntervalInMs:       3000,
