@@ -55,7 +55,7 @@ func NewNacosNamingClient() naming_client.INamingClient {
 	return nacosNamingClient
 }
 
-// NewNacosNamingClient 创建动态配置客户端
+// NewNacosConfigClient 创建动态配置客户端
 func NewNacosConfigClient() config_client.IConfigClient {
 	nacosConfigClient, err := clients.NewConfigClient(vo.NacosClientParam{
 		ClientConfig:  NewNacosClientConfig(),
