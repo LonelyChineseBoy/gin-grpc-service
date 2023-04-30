@@ -1,0 +1,79 @@
+syntax = "proto3";
+package proto;
+option go_package = "user-srv/proto";
+
+service User {
+  //  创建用户
+  rpc CreateUser (UserInfoRequest) returns (UserInfoResponse);
+  //  更新用户
+  rpc UpdateUser(UpdateUserRequest) returns (UserInfoResponse);
+  //  查询用户
+  rpc GetUserList(UserListRequest) returns (UserListResponse);
+  //  根据手机号查询用户
+  rpc GetUserByMobile(MobileRequest)returns(UserInfoResponse);
+  //  根据id查询用户
+  rpc GetUserById(IdRequest)returns(UserInfoResponse);
+  //  密码校验
+  rpc CheckPassword(PasswordRequest)returns(CheckResultResponse);
+}
+
+
+
+message UserBase {
+  string username = 1;
+  string nickname = 2;
+  string password = 3;
+  string mobile = 4;
+  string email = 5;
+  uint32 status = 6;
+  uint32 usertype = 7;
+  uint32 gender = 8;
+  int64 birthday = 9;
+}
+
+message UserInfoRequest {
+  UserBase userinfo = 1;
+}
+
+message UserInfoResponse {
+  uint32 id = 1;
+  int64 create_time = 2;
+  int64 update_time = 3;
+  UserBase userinfo = 4;
+}
+
+message UpdateUserRequest {
+  uint32 id = 1;
+  UserBase userinfo = 2;
+}
+
+
+message UserListRequest {
+  string page = 1;
+  string size = 2;
+}
+
+message UserListResponse {
+  uint64 total = 1;
+  repeated UserInfoResponse users = 2;
+}
+
+
+message MobileRequest {
+  string mobile = 1;
+}
+
+
+message IdRequest{
+  uint32 id = 1;
+}
+
+
+message PasswordRequest {
+  string password = 1;
+  string encrypt_password = 2;
+}
+
+message CheckResultResponse{
+  bool result = 1;
+}

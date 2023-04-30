@@ -37,6 +37,6 @@ func InitGormConfig() {
 	var err error
 	global.DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		zap.S().Errorf("connecting mysql.yaml seerver failed %v", err)
+		zap.S().Errorf("connecting mysql server failed %v", err)
 	}
 }
