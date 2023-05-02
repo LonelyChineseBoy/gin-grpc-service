@@ -1,10 +1,10 @@
 package main
 
 import (
-	"gin-test/api"
-	"gin-test/global"
-	"gin-test/handler"
-	"gin-test/initialize"
+	"gin-service/api"
+	"gin-service/global"
+	"gin-service/handler"
+	"gin-service/initialize"
 )
 
 func init() {

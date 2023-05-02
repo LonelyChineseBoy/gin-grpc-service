@@ -1,10 +1,10 @@
 package initialize
 
 import (
-	"gin-test/global"
-	"gin-test/handler"
-	"gin-test/logger"
-	"gin-test/middleware"
+	"gin-service/global"
+	"gin-service/handler"
+	"gin-service/logger"
+	"gin-service/middleware"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"

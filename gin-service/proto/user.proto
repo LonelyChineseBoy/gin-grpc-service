@@ -1,6 +1,6 @@
 syntax = "proto3";
 //package proto;
-option go_package = "user-srv/proto";
+option go_package = "gin-service/proto";
 
 service User {
   //  创建用户
@@ -15,23 +15,7 @@ service User {
   rpc GetUserById(IdRequest)returns(UserInfoResponse);
   //  密码校验
   rpc CheckPassword(PasswordRequest)returns(CheckResultResponse);
-  //  保存用户地址
-  rpc CreateUserAddress(UserAddressInfoRequest) returns (AddressResponse);
-  //  获取用户地址
-  rpc GetUserAddressList(UserAddressListRequest)returns(UserAddressListResponse);
-  //  更新用户地址
-  rpc UpdateUserAddressInfo(UserAddressDetailRequest)returns(AddressResponse);
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

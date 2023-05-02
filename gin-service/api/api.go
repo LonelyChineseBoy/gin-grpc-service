@@ -1,7 +1,7 @@
 package api
 
 import (
-	"gin-test/global"
+	"gin-service/global"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"net/http"
