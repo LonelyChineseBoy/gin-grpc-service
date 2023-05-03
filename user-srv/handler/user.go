@@ -57,6 +57,14 @@ func ModelToUserResponse(user model.User) *proto.UserInfoResponse {
 	return &userInfoRsp
 }
 
+func ModelToAddressResponse(address model.UserAddress) *proto.AddressResponse {
+	addressInfo := proto.AddressResponse{
+		Id:            uint32(address.ID),
+		AddressDetail: address.AddressDetail,
+	}
+	return &addressInfo
+}
+
 func (u *UserServer) CreateUser(ctx context.Context, req *proto.UserInfoRequest) (*proto.UserInfoResponse, error) {
 	var user model.User
 	result := global.DB.Where(model.User{Mobile: req.Userinfo.Mobile}).Or(model.User{UserName: req.Userinfo.Username}).First(&user)
@@ -155,4 +163,50 @@ func (u *UserServer) CheckPassword(ctx context.Context, req *proto.PasswordReque
 	encryptPassword := req.EncryptPassword
 	result := CheckPasswordHash(password, encryptPassword)
 	return &proto.CheckResultResponse{Result: result}, nil
+}
+
+func (u *UserServer) CreateUserAddress(ctx context.Context, req *proto.UserAddressInfoRequest) (*proto.AddressResponse, error) {
+	var user model.User
+	var address model.UserAddress
+	if result := global.DB.Where(model.User{Model: gorm.Model{ID: uint(req.UserId)}}).First(&user); result.RowsAffected == 0 {
+		return nil, status.Errorf(codes.NotFound, "保存地址对应用户没有找到!")
+	}
+	address.UserId = int(req.UserId)
+	address.AddressDetail = req.AddressDetail
+	result := global.DB.Save(&address)
+	if result.Error != nil {
+		return nil, status.Errorf(codes.Internal, "数据保存失败，请稍后重试!")
+	}
+	return ModelToAddressResponse(address), nil
+}
+
+func (u *UserServer) GetUserAddressList(ctx context.Context, req *proto.IdRequest) (*proto.UserAddressListResponse, error) {
+	var addresses []model.UserAddress
+	result := global.DB.Where(model.UserAddress{UserId: int(req.Id)}).Find(&addresses)
+	if result.Error != nil {
+		return nil, status.Errorf(codes.Internal, "获取地址失败，请稍后重试!")
+	}
+	total := uint32(result.RowsAffected)
+	addressList := proto.UserAddressListResponse{}.AddressList
+	for _, address := range addresses {
+		item := ModelToAddressResponse(address)
+		addressList = append(addressList, item)
+	}
+	return &proto.UserAddressListResponse{
+		Total:       total,
+		AddressList: addressList,
+	}, nil
+}
+
+func (u *UserServer) UpdateUserAddressInfo(ctx context.Context, req *proto.UserAddressDetailRequest) (*proto.AddressResponse, error) {
+	var address model.UserAddress
+	if result := global.DB.Where(model.UserAddress{Model: gorm.Model{ID: uint(req.Id)}}).First(&address); result.RowsAffected == 0 {
+		return nil, status.Errorf(codes.NotFound, "没有找到地址信息，无法修改!")
+	}
+	address.AddressDetail = req.AddressDetail
+	result := global.DB.Save(&address)
+	if result.Error != nil {
+		return nil, status.Errorf(codes.Internal, "保存地址信息错误，请稍后重试!")
+	}
+	return ModelToAddressResponse(address), nil
 }

@@ -18,22 +18,31 @@ service User {
   //  保存用户地址
   rpc CreateUserAddress(UserAddressInfoRequest) returns (AddressResponse);
   //  获取用户地址
-  rpc GetUserAddressList(UserAddressListRequest)returns(UserAddressListResponse);
+  rpc GetUserAddressList(IdRequest)returns(UserAddressListResponse);
   //  更新用户地址
   rpc UpdateUserAddressInfo(UserAddressDetailRequest)returns(AddressResponse);
 }
 
+message UserAddressDetailRequest {
+  uint32 Id = 1;
+  string addressDetail = 2;
+}
 
 
+message UserAddressInfoRequest {
+  uint32 userId = 1;
+  string addressDetail = 2;
+}
 
+message AddressResponse {
+  uint32 id = 1;
+  string addressDetail = 2;
+}
 
-
-
-
-
-
-
-
+message UserAddressListResponse {
+  uint32 total = 1;
+  repeated AddressResponse addressList = 2;
+}
 
 message UserBase {
   string username = 1;

@@ -43,10 +43,10 @@ func ExitProcedure(addr string, handler http.Handler) {
 		}
 	}()
 	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
 	<-quit
 	zap.S().Info("Shutdown Server......")
-	timeout, cancelFunc := context.WithTimeout(context.Background(), time.Second*50)
+	timeout, cancelFunc := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancelFunc()
 	err := srv.Shutdown(timeout)
 	if err != nil {

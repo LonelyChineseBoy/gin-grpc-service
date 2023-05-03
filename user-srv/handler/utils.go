@@ -29,6 +29,7 @@ func ReadConfigByYamlFile(filePath string, globalVal interface{}) {
 	})
 }
 
+// 随机获取可用端口号
 func GetAvailablePort() (int, error) {
 	rand.Seed(time.Now().UnixNano())
 	minPort := 1024
@@ -38,7 +39,7 @@ func GetAvailablePort() (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	listener.Close()
+	defer listener.Close()
 	actualPort := listener.Addr().(*net.TCPAddr).Port
 	return actualPort, nil
 }
