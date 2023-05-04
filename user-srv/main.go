@@ -64,11 +64,10 @@ func main() {
 		Weight:      10,
 		Enable:      true,
 		Healthy:     true,
-		Metadata:    nil,
 		ClusterName: ClusterName,
 		ServiceName: ServiceName,
 		GroupName:   GroupName,
-		Ephemeral:   false,
+		Ephemeral:   true,
 	})
 	if registerErr != nil {
 		zap.S().Panicf("注册用户服务实例失败:%v", registerErr.Error())
@@ -92,17 +91,17 @@ func main() {
 			<-time.After(time.Second * 5)
 			server.GracefulStop()
 			listen.Close()
-			_, deRegisterErr := namingClient.DeregisterInstance(vo.DeregisterInstanceParam{
-				Ip:          ip,
-				Port:        uint64(port),
-				Cluster:     ClusterName,
-				ServiceName: ServiceName,
-				GroupName:   GroupName,
-				Ephemeral:   false,
-			})
-			if deRegisterErr != nil {
-				zap.S().Errorf("注销服务实例失败%v", deRegisterErr)
-			}
+			//_, deRegisterErr := namingClient.DeregisterInstance(vo.DeregisterInstanceParam{
+			//	Ip:          ip,
+			//	Port:        uint64(port),
+			//	Cluster:     ClusterName,
+			//	ServiceName: ServiceName,
+			//	GroupName:   GroupName,
+			//	Ephemeral:   false,
+			//})
+			//if deRegisterErr != nil {
+			//	zap.S().Errorf("注销服务实例失败%v", deRegisterErr)
+			//}
 			return
 		}
 	}
